@@ -139,12 +139,10 @@ $$
 Este ajuste representa el nivel de ganado ilegal que pudo entrar. Lo cual influye directamente en:
 
 -   la cantidad de bovinos susceptibles $S$
-
 -   la posibilidad de introducir animales infestados
-
 -   y el mantenimiento del riesgo durante el rebrote
 
-    **Módulo de mitigación**
+### Módulo de mitigación
 
 Este módulo representa la **Técnica del Insecto Estéril (TIE)**, que disminuye la reproducción del gusano.
 
