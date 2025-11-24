@@ -8,7 +8,6 @@ output:
     toc_depth: 3
     number_sections: true
 geometry: margin=2.5cm
-
 ---
 
 ```{r setup, include=FALSE}
@@ -162,21 +161,18 @@ Entre mayor sea $u$, menor es la oviposición efectiva, y por lo tanto, disminuy
 
 Este módulo permite simular escenarios con liberaciones bajas, medias o intensivas.
 
-![](images/Captura de pantalla 2025-11-23 152313.png)
+![](images/Captura%20de%20pantalla%202025-11-23%20152313.png)
 
 **A continuación se presenta la formulación del modelo completo mediante ecuaciones diferenciales:**
 
-
-
-
 ### Obtención de Parámetros
 
-Estos se basan en la biología conocida de la mosca *Cochliomyia hominivorax* y se obtienen principalmente de literatura científica, estudios entomológicos y reportes de programas de erradicación (como el de COPEG o agencias gubernamentales como SENASICA/USDA). La siguiente información se obtuvo de SENASICA (2020): 
+Estos se basan en la biología conocida de la mosca *Cochliomyia hominivorax* y se obtienen principalmente de literatura científica, estudios entomológicos y reportes de programas de erradicación (como el de COPEG o agencias gubernamentales como SENASICA/USDA). La siguiente información se obtuvo de SENASICA (2020):
 
-- El parámetro $\alpha_{\text{base}}$ representa la tasa promedio de producción de huevos por mosca adulta por día en condiciones ideales.$$\alpha_{\text{base}} = \frac{\text{Huevos totales puestos en su vida}}{\text{Esperanza de vida reproductiva de la hembra (días)}}$$
+-   El parámetro $\alpha_{\text{base}}$ representa la tasa promedio de producción de huevos por mosca adulta por día en condiciones ideales.$$\alpha_{\text{base}} = \frac{\text{Huevos totales puestos en su vida}}{\text{Esperanza de vida reproductiva de la hembra (días)}}$$
 
-| **Dato Biológico** | **Valor** | **Uso en $\alpha_{\text{base}}$** |
-| :--- | :--- | :--- |
+| **Dato Biológico** | **Valor** | **Uso en** $\alpha_{\text{base}}$ |
+|:-----------------------|:-----------------------|:-----------------------|
 | Población en $A$ | 50% Hembras, 50% Machos | Solo las hembras oviponen. |
 | Oviposición por Masa | $200$ a $400$ huevos (Usamos $300$) | Se usa para calcular la producción total. |
 | Masas Totales | Hasta cuatro masas de huevos en su vida. | Se usa para calcular la producción total. |
@@ -184,24 +180,121 @@ Estos se basan en la biología conocida de la mosca *Cochliomyia hominivorax* y 
 
 Valor que usaremos para el modelo: $\alpha_{\text{base}} \approx 43$ por día.
 
-- Tasa de Mortalidad del Adulto ($\mu_A$)El parámetro $\mu_A$ es el inverso de la esperanza de vida promedio del adulto en la naturaleza.
-- Vida de los Machos: $14$ a $21$ días (Promedio: $17.5$ días)
-- Vida de las Hembras: $10$ a $30$ días (Promedio: $20$ días)
-- Vida Promedio Ponderada (asumiendo 50% machos, 50% hembras):$$\text{Vida Promedio} \approx \frac{17.5 + 20}{2} = 18.75 \text{ días}$$
+-   Tasa de Mortalidad del Adulto ($\mu_A$)El parámetro $\mu_A$ es el inverso de la esperanza de vida promedio del adulto en la naturaleza.
+-   Vida de los Machos: $14$ a $21$ días (Promedio: $17.5$ días)
+-   Vida de las Hembras: $10$ a $30$ días (Promedio: $20$ días)
+-   Vida Promedio Ponderada (asumiendo 50% machos, 50% hembras):$$\text{Vida Promedio} \approx \frac{17.5 + 20}{2} = 18.75 \text{ días}$$
 
-La tasa de mortalidad diaria ($\mu_A$) se calcula como el inverso del tiempo promedio de vida:$$\mu_A = \frac{1}{\text{Vida Promedio}} \approx \frac{1}{18.75} \approx 0.0533$$
-Valor que usaremos para el modelo: $\mu_A \approx 0.053$ por día
+La tasa de mortalidad diaria ($\mu_A$) se calcula como el inverso del tiempo promedio de vida:$$\mu_A = \frac{1}{\text{Vida Promedio}} \approx \frac{1}{18.75} \approx 0.0533$$ Valor que usaremos para el modelo: $\mu_A \approx 0.053$ por día
 
-- Para estimar  directamente los parámetros de tasas de transición ($\eta, \kappa, \epsilon$) para el ciclo de vida del parásito ($H \rightarrow L \rightarrow P \rightarrow A$). Usaremos la siguiente formula 
+-   Para estimar directamente los parámetros de tasas de transición ($\eta, \kappa, \epsilon$) para el ciclo de vida del parásito ($H \rightarrow L \rightarrow P \rightarrow A$). Usaremos la siguiente formula
 
 $$\text{Tasa de Transición } (\lambda) = \frac{1}{\text{Tiempo Promedio de la Fase } (\tau \text{ días})}$$
 
-
-| **Parámetro** | **Fase** | **Duración Promedio ($\tau$)** | **Tasa Diaria ($\lambda=1/\tau$)** | **Valor que usaremos para el modelo** |
-| :--- | :--- | :--- | :--- | :--- |
+| **Parámetro** | **Fase** | **Duración Promedio (**$\tau$) | **Tasa Diaria (**$\lambda=1/\tau$) | **Valor que usaremos para el modelo** |
+|:--------------|:--------------|:--------------|:--------------|:--------------|
 | $\eta_{\text{base}}$ | Huevo $\rightarrow$ Larva | 0.4167 días | $1 / 0.4167$ | 2.4 |
 | $\kappa_{\text{base}}$ | Larva $\rightarrow$ Pupa | 6 días | $1 / 6$ | 0.167 |
 | $\epsilon_{\text{base}}$ | Pupa $\rightarrow$ Adulto | 8.5 días | $1 / 8.5$ | 0.118 |
 
-## Referencias 
-- Servicio Nacional de Sanidad, Inocuidad y Calidad Agroalimentaria [SENASICA]. (2020). Todo lo que usted debe saber sobre la erradicación de la miasis causada por el gusano barrenador del ganado (GBG). https://www.gob.mx/cms/uploads/attachment/file/936256/TODO_LO_QUE_DEBES_SABER_SOBRE_LA_ERRADICACI_N_DE_LA_MIASIS_CAUSADA_POR_GBG.pdf
+### Parámetros del Compartimento Bovino (SEIRS)
+
+Los parámetros del modelo SEIRS para bovinos se calculan utilizando datos epidemiológicos del rebrote de miasis por *Cochliomyia hominivorax* en Chiapas durante 2024-2025, en combinación con información biológica documentada por SENASICA.
+
+**Notación de parámetros:**
+
+-   $\sigma$: tasa de transición Susceptible → Expuesto (oviposición e incubación)
+-   $\beta$: tasa de transición Expuesto → Infestado (desarrollo larvario temprano)
+-   $\gamma$: tasa de transición Infestado → Recuperado (tratamiento y cicatrización)
+-   $\theta$: tasa de transición Recuperado → Susceptible (pérdida de protección)
+
+#### Obtención de Parámetros
+
+Estos parámetros se basan en datos epidemiológicos oficiales de SENASICA/INEGI.
+
+Parámetro $\sigma$ (Susceptible → Expuesto)
+
+El parámetro $\sigma$ representa la **tasa de incidencia**, calculada a partir de la proporción de casos observados durante el período del brote.
+
+**Paso 1: Cálculo de la proporción de incidencia**
+
+La proporción de incidencia se calcula como la fracción de la población bovina que fue infestada durante el período del brote:
+
+$$\text{Proporción de incidencia} = \frac{\text{Casos confirmados}}{\text{Población total}}$$
+
+**Datos:**
+
+|                                     | **Valor**            | **Fuente**      |
+|:--------------------------------|:--------------------|:-----------------|
+| Población bovina 2022 (Censo INEGI) | 1,653,718 cabezas    | INEGI (2022)    |
+| Tasa de crecimiento anual           | 8.06%                | INEGI (2022)    |
+| Período de proyección               | 2022 → 2025 (3 años) | \-              |
+| Casos confirmados en Chiapas        | 1,326 casos          | SENASICA (2025) |
+
+**Cálculo de la población bovina en 2025:**
+
+$$N_{2025} = N_{2022} \times (1 + r)^t$$
+
+$$N_{2025} = 1,653,718 \times (1.0806)^3 = 1,653,718 \times 1.2617 = 2,086,688 \text{ cabezas}$$
+
+**Cálculo de la proporción de incidencia:**
+
+$$\text{Proporción} = \frac{1,326}{2,086,688} = 6.35 \times 10^{-4}$$
+
+**Paso 2: Conversión a tasa de incidencia**
+
+$$\sigma = \frac{\text{Proporción de incidencia}}{\text{Duración del brote (días)}}$$
+
+**Datos temporales del brote:**
+
+|                        | **Valor**            | **Fuente**      |
+|:-----------------------|:---------------------|:----------------|
+| Inicio del brote       | Noviembre 2024       | SENASICA (2024) |
+| Casos reportados hasta | 24 de noviembre 2025 | SENASICA (2025) |
+| Duración del brote     | **365 días**         | Calculado       |
+
+**Cálculo de** $\sigma$ **(tasa de incidencia):**
+
+$$\sigma = \frac{6.35 \times 10^{-4}}{365 \text{ días}} = 1.74 \times 10^{-6} \text{ día}^{-1}$$
+
+**Valor que usaremos para el modelo:** $\sigma \approx 1.74 \times 10^{-6}$ día$^{-1}$ (0.00000174 día$^{-1}$ )
+
+Parámetro $\beta$ (Expuesto → Infestado)
+
+El parámetro $\beta$ representa la tasa a la cual bovinos con huevos depositados o larvas recién eclosionadas desarrollan una infestación clínicamente detectable.
+
+**Base biológica (SENASICA, 2020):** Entre 12 y 24 horas después de la oviposición las larvas eclosionan y se alimentan de tejido vivo durante 4 a 8 días.
+
+**Componentes del estado Expuesto (E):**
+
+| **Fase**              | **Duración**          |
+|:----------------------|:----------------------|
+| Huevos (pre-eclosión) | 12-24h (promedio 18h) |
+| Larvas recién nacidas | 24-32h (promedio 30h) |
+| **Total en estado E** | **\~2 días (48 h)**   |
+
+$$\text{Tasa de Transición } (\beta) = \frac{1}{\text{Tiempo Promedio en E } (\tau_E \text{ días})}$$
+
+$$\beta = \frac{1}{2 \text{ días}} = 0.5 \text{ día}^{-1}$$
+
+**Valor que usaremos para el modelo:** $\beta \approx 0.5$ día$^{-1}$
+
+#### Parámetro $\gamma$ (Infestado → Recuperado)
+
+El parámetro $\gamma$ representa la tasa a la cual bovinos infestados se recuperan tras eliminación natural de larvas.
+
+**Base biológica:**
+
+-   **Sin tratamiento:** La miasis puede ser fatal en 7-10 días
+
+**Cálculo:**
+
+$$\tau_{\text{recuperación}} = 7 \text{ días}$$
+
+$$\gamma = \frac{1}{\tau_{\text{recuperación}}} = \frac{1}{7} \approx 0.143 \text{ día}^{-1}$$
+
+**Valor que usaremos para el modelo:** $\gamma \approx 0.14$ día$^{-1}$
+
+## Referencias
+
+-   Servicio Nacional de Sanidad, Inocuidad y Calidad Agroalimentaria [SENASICA]. (2020). Todo lo que usted debe saber sobre la erradicación de la miasis causada por el gusano barrenador del ganado (GBG). <https://www.gob.mx/cms/uploads/attachment/file/936256/TODO_LO_QUE_DEBES_SABER_SOBRE_LA_ERRADICACI_N_DE_LA_MIASIS_CAUSADA_POR_GBG.pdf>
