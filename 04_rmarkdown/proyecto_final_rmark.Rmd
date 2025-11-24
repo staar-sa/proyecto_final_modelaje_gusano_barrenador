@@ -8,6 +8,7 @@ output:
     toc_depth: 3
     number_sections: true
 geometry: margin=2.5cm
+
 ---
 
 ```{r setup, include=FALSE}
@@ -164,3 +165,43 @@ Este módulo permite simular escenarios con liberaciones bajas, medias o intensi
 ![](images/Captura de pantalla 2025-11-23 152313.png)
 
 **A continuación se presenta la formulación del modelo completo mediante ecuaciones diferenciales:**
+
+
+
+
+### Obtención de Parámetros
+
+Estos se basan en la biología conocida de la mosca *Cochliomyia hominivorax* y se obtienen principalmente de literatura científica, estudios entomológicos y reportes de programas de erradicación (como el de COPEG o agencias gubernamentales como SENASICA/USDA). La siguiente información se obtuvo de SENASICA (2020): 
+
+- El parámetro $\alpha_{\text{base}}$ representa la tasa promedio de producción de huevos por mosca adulta por día en condiciones ideales.$$\alpha_{\text{base}} = \frac{\text{Huevos totales puestos en su vida}}{\text{Esperanza de vida reproductiva de la hembra (días)}}$$
+
+| **Dato Biológico** | **Valor** | **Uso en $\alpha_{\text{base}}$** |
+| :--- | :--- | :--- |
+| Población en $A$ | 50% Hembras, 50% Machos | Solo las hembras oviponen. |
+| Oviposición por Masa | $200$ a $400$ huevos (Usamos $300$) | Se usa para calcular la producción total. |
+| Masas Totales | Hasta cuatro masas de huevos en su vida. | Se usa para calcular la producción total. |
+| Vida Reproductiva | El apareamiento ocurre entre el día 3-5, y la oviposición comienza al día 6. La vida es de $\approx 20$ días. | La fase reproductiva dura aproximadamente $20 - 6 = 14$ días. |
+
+Valor que usaremos para el modelo: $\alpha_{\text{base}} \approx 43$ por día.
+
+- Tasa de Mortalidad del Adulto ($\mu_A$)El parámetro $\mu_A$ es el inverso de la esperanza de vida promedio del adulto en la naturaleza.
+- Vida de los Machos: $14$ a $21$ días (Promedio: $17.5$ días)
+- Vida de las Hembras: $10$ a $30$ días (Promedio: $20$ días)
+- Vida Promedio Ponderada (asumiendo 50% machos, 50% hembras):$$\text{Vida Promedio} \approx \frac{17.5 + 20}{2} = 18.75 \text{ días}$$
+
+La tasa de mortalidad diaria ($\mu_A$) se calcula como el inverso del tiempo promedio de vida:$$\mu_A = \frac{1}{\text{Vida Promedio}} \approx \frac{1}{18.75} \approx 0.0533$$
+Valor que usaremos para el modelo: $\mu_A \approx 0.053$ por día
+
+- Para estimar  directamente los parámetros de tasas de transición ($\eta, \kappa, \epsilon$) para el ciclo de vida del parásito ($H \rightarrow L \rightarrow P \rightarrow A$). Usaremos la siguiente formula 
+
+$$\text{Tasa de Transición } (\lambda) = \frac{1}{\text{Tiempo Promedio de la Fase } (\tau \text{ días})}$$
+
+
+| **Parámetro** | **Fase** | **Duración Promedio ($\tau$)** | **Tasa Diaria ($\lambda=1/\tau$)** | **Valor que usaremos para el modelo** |
+| :--- | :--- | :--- | :--- | :--- |
+| $\eta_{\text{base}}$ | Huevo $\rightarrow$ Larva | 0.4167 días | $1 / 0.4167$ | 2.4 |
+| $\kappa_{\text{base}}$ | Larva $\rightarrow$ Pupa | 6 días | $1 / 6$ | 0.167 |
+| $\epsilon_{\text{base}}$ | Pupa $\rightarrow$ Adulto | 8.5 días | $1 / 8.5$ | 0.118 |
+
+## Referencias 
+- Servicio Nacional de Sanidad, Inocuidad y Calidad Agroalimentaria [SENASICA]. (2020). Todo lo que usted debe saber sobre la erradicación de la miasis causada por el gusano barrenador del ganado (GBG). https://www.gob.mx/cms/uploads/attachment/file/936256/TODO_LO_QUE_DEBES_SABER_SOBRE_LA_ERRADICACI_N_DE_LA_MIASIS_CAUSADA_POR_GBG.pdf
