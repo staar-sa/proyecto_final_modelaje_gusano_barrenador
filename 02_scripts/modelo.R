@@ -11,10 +11,10 @@ miasis<-function(t,state,pars){
     
     # Hospedante
     
-    dIv<- sigma*S*(M/NV) -beta*Ev -gamma*Iv + delta*ML*Iv - miuv*Iv
-    dSv<- natalidad + (1-p) + p - sigma*(Sv(M/NV)) - miuv * Sv +tetha*Rv
-    dR <- gamma * Iv - miuv * Rv + tetha*Rv
-    dE<-  sigma*S*(M/NV)- beta*Ev- miuv*Ev
+    dIv<- sigma*Sv*(M/NV) -beta*Ev -gamma*Iv + delta*ML*Iv - miuv*Iv
+    dSv<- natalidad + p1+ p2 - sigma*(Sv(M/NV)) - miuv * Sv +tetha*Rv
+    dRv <- gamma * Iv - miuv * Rv + tetha*Rv
+    dEv <-  sigma*S*(M/NV)- beta*Ev- miuv*Ev
     
     ##vector
     
@@ -28,10 +28,10 @@ miasis<-function(t,state,pars){
 }
 
 pars<-c(sigma = ,beta= , gamma= , delta= ,miuv= ,natalidad= , p= , tetha= , epsilon= ,
-        mium= ,kappa= , eta= , alpha= )
+        mium= ,kappa= , eta= , alpha= , natalidad= ,p1=23325,p2=1444)
 
 t<-seq(0,100, by=0.01)
-state<-c(Iv= , Ev= , Iv= ,Rv= , M= , Mo= , Ml= , Mp= )
+state<-c(Sv= , Ev= , Iv= ,Rv= , M= , Mo= , Ml= , Mp= )
 
 #ecuaciones diferenciales
 
