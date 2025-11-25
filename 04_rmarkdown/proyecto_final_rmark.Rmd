@@ -532,10 +532,6 @@ Aguilar y colaboradores, determinaron que en Chiapas había una tasa de natalida
 
 ## Escenario donde hay moscas liberadas y entrada de ganado ilegal
 
-![](images/moscas_ganado.png){width="624"}
-
-![](images/1.png){width="626"}
-
 ![](images/grafia1_bovino.png)  
 
 ![](images/grafica1_parasito.png)
@@ -544,23 +540,18 @@ Aguilar y colaboradores, determinaron que en Chiapas había una tasa de natalida
 
 Aumenta el alfa y delta.
 
-![](images/reduciendo_mitigacion_mosca.png){width="626"}  
-
-![](images/2.png){width="626"}
-
 ![](images/grafica2_bovino.png)
 
 ![](images/grafica2_parasito.png)
 
 ## Escenario sin ganado ilegal
 
-![](images/sin_ilegal.png){width="626"}  
-
-![](images/3.png){width="626"}
-
 ![](images/grafica3_bovino.png)  
 
 ![](images/grafica3_parasito.png)
+##Aproximado de R0
+
+$$R0 = \frac{beta+sigma (M/Nv) +alfa+tetha+}{tasas de muerte del vector + gamma}$$
 
 # **Conclusión basada en los escenarios del modelo**
 
