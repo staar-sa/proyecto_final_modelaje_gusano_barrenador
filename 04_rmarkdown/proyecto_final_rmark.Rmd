@@ -531,15 +531,17 @@ Aguilar y colaboradores, determinaron que en Chiapas había una tasa de natalida
 
 ![](images/moscas_ganado.png){width='100px'}
 
+![](images/1.png){width='100px'}
 ##Escenario donde hay sin liberación de moscas con ganado ilegal
 
 Aumenta el alfa y delta.
 
 ![](images/reduciendo_mitigacion_mosca.png){width='100px'}
-
+![](images/2.png){width='100px'}
 ##Escenario sin ganado ilegal
 
 ![](images/sin_ilegal.png){width='100px'}
+![](images/3.png){width='100px'}
 
 ## Referencias
 -   Aguilar-Jiménez, C. E., et al. (2023). "Sistemas familiares de producción bovina de la región Frailesca de Chiapas, México, con base en el aporte de la ganadería al ingreso familiar". Tropical and Subtropical Agroecosystems, 26(2), 4131

@@ -57,6 +57,9 @@ out1 <- ode(y = state, times = t, func = miasis, parms = pars)
 
 plot(out1, col = "purple")
 
+matplot(out1[,1], out1[, c("Sv","Ev","Iv","Rv")], type="l",
+        lwd=2, col=c("blue","purple","red","green"))
+
 #################################################################################
 
 ##Escenario sin liberación de moscas con ganado ilegal
@@ -115,7 +118,8 @@ out2 <- ode(y = state1, times = t1, func = no_mosca, parms = pars1)
 
 plot(out2, col = "purple")
 
-
+matplot(out2[,1], out2[, c("Sv","Ev","Iv","Rv")], type="l",
+        lwd=2, col=c("blue","purple","red","green"))
 ###############################################################################################
 
 ##sin ganado ilegal
@@ -175,3 +179,6 @@ state2 <- c(Sv = 1171866, Ev = 469147, Iv = 7474, Rv = 5231,M = 10000000, Mo = 3
 out3 <- ode(y = state2, times = t2, func = no.ilegal, parms = pars2)
 
 plot(out3, col = "purple")
+
+matplot(out3[,1], out3[, c("Sv","Ev","Iv","Rv")], type="l",
+        lwd=2, col=c("blue","purple","red","green"))
