@@ -178,6 +178,28 @@ Estos se basan en la biología conocida de la mosca *Cochliomyia hominivorax* y 
 | Masas Totales | Hasta cuatro masas de huevos en su vida. | Se usa para calcular la producción total. |
 | Vida Reproductiva | El apareamiento ocurre entre el día 3-5, y la oviposición comienza al día 6. La vida es de $\approx 20$ días. | La fase reproductiva dura aproximadamente $20 - 6 = 14$ días. |
 
+Cálculo:
+
+1. Huevos Totales por Hembra (en su vida):  
+   $$
+   \text{Huevos totales} = \text{Promedio de Huevos por Masa} \times \text{Número de Masas}
+   $$
+   $$
+   \text{Huevos totales} \approx 300 \text{ huevos/masa} \times 4 \text{ masas} = 1200 \text{ huevos}
+   $$
+
+2. Tasa de Oviposición por Hembra (diaria, durante su vida reproductiva):  
+   $$
+   \text{Tasa Hembra} = \frac{1200 \text{ huevos}}{14 \text{ días}} \approx 85.7 \text{ huevos/día/hembra}
+   $$
+
+3. Tasa de Oviposición por Adulto ($\alpha_{\text{base}}$):  
+   Dado que el compartimento $A$ incluye machos y hembras (50% de cada uno),  
+   la tasa promedio por individuo en $A$ es la mitad de la tasa de la hembra.
+   $$
+   \alpha_{\text{base}} = \text{Tasa Hembra} \times 0.50 \approx 85.7 \times 0.50 \approx 42.85
+   $$
+
 Valor que usaremos para el modelo: $\alpha_{\text{base}} \approx 43$ por día.
 
 -   Tasa de Mortalidad del Adulto ($\mu_A$)El parámetro $\mu_A$ es el inverso de la esperanza de vida promedio del adulto en la naturaleza.
@@ -186,6 +208,15 @@ Valor que usaremos para el modelo: $\alpha_{\text{base}} \approx 43$ por día.
 -   Vida Promedio Ponderada (asumiendo 50% machos, 50% hembras):$$\text{Vida Promedio} \approx \frac{17.5 + 20}{2} = 18.75 \text{ días}$$
 
 La tasa de mortalidad diaria ($\mu_A$) se calcula como el inverso del tiempo promedio de vida:$$\mu_A = \frac{1}{\text{Vida Promedio}} \approx \frac{1}{18.75} \approx 0.0533$$ Valor que usaremos para el modelo: $\mu_A \approx 0.053$ por día
+
+**Suposiciones  para las Tasas de Mortalidad**
+
+| **Parámetro** | **Fase** | **Suposición** | **Valor Sugerido (Diario)** | **Razón** |
+| :--- | :--- | :--- | :--- | :--- |
+| $\mu_H$ | Huevo | Mínima mortalidad (principalmente por factores intrínsecos). | 0.005 (0.5%) | El texto SENASICA 2020 indica que eclosionan rápidamente (1 día). Los huevos en la masa están protegidos por la hembra y por estar en el borde de una herida (ambiente nutritivo). |
+| $\mu_L$ | Larva | Mortalidad baja (protegida dentro del huésped). | 0.01 (1%) | La larva es un parásito obligado; está protegida dentro del tejido vivo de la herida. La principal amenaza es el tratamiento (que está fuera de esta $\mu$) o que la herida se seque. |
+| $\mu_P$ | Pupa | Mortalidad más alta (fase ambiental más vulnerable). | 0.03 (3%) | La pupa se encuentra en el suelo, donde está expuesta a la depredación, inundaciones, desecación extrema o temperaturas desfavorables (aunque el clima base sea óptimo, hay riesgos). |
+
 
 -   Para estimar directamente los parámetros de tasas de transición ($\eta, \kappa, \epsilon$) para el ciclo de vida del parásito ($H \rightarrow L \rightarrow P \rightarrow A$). Usaremos la siguiente formula
 
