@@ -60,6 +60,62 @@ plot(out1, col = "purple")
 matplot(out1[,1], out1[, c("Sv","Ev","Iv","Rv")], type="l",
         lwd=2, col=c("blue","purple","red","green"))
 
+
+##Guardar gráficas en pdf  
+pdf(file = "Resultados_Miasis.pdf", width = 10, height = 14) # Le damos bastante altura (14) para que quepan las dos gráficas sin aplastarse.
+
+# mfrow = c(2, 1): Crea una matriz de 2 filas y 1 columna (una gráfica arriba de la otra)
+# mar = márgenes: c(abajo, izquierda, arriba, derecha). Damos espacio para los ejes.
+par(mfrow = c(2, 1), mar = c(5, 5, 4, 2) + 0.1)
+
+
+# gráfica 1: dinámica del ganado 
+
+cols_ganado <- c("Sv", "Ev", "Iv", "Rv") # Seleccionamos las columnas del ganado
+
+matplot(out1[, "time"], out1[, cols_ganado], 
+        type = "l",       
+        lty = 1,          
+        lwd = 3,           
+        col = c("blue", "orange", "red", "green"), 
+        xlab = "Tiempo (días)", 
+        ylab = "Población (Individuos)",
+        main = "Dinámica del Ganado Bovino",
+        cex.lab = 1.2,    
+        cex.main = 1.5)   
+
+
+legend("topright", 
+       legend = c("Susceptibles (S)", "Expuestos (E)", "Infectados (I)", "Recuperados (R)"),
+       col = c("blue", "orange", "red", "green"), 
+       lty = 1, lwd = 3, bty = "n", cex = 1.1)
+
+# gráfica 2: dinámica del parásito
+
+cols_vector <- c("M", "Mo", "Ml", "Mp") # Seleccionamos las columnas del parásito
+
+matplot(out1[, "time"], out1[, cols_vector], 
+        type = "l", 
+        lty = 1, 
+        lwd = 3,
+        col = c("black", "purple", "brown", "gray"),
+        xlab = "Tiempo (días)", 
+        ylab = "Población (Escala Logarítmica)",
+        main = "Dinámica del Gusano Barrenador (Ciclo de Vida)",
+        log = "y",        
+        cex.lab = 1.2,
+        cex.main = 1.5)
+
+legend("bottomright", 
+       legend = c("Adultos (M)", "Huevos (Mo)", "Larvas (Ml)", "Pupas (Mp)"),
+       col = c("black", "purple", "brown", "gray"), 
+       lty = 1, lwd = 3, bty = "n", cex = 1.1)
+
+
+dev.off()
+
+
+
 #################################################################################
 
 ##Escenario sin liberación de moscas con ganado ilegal
@@ -120,6 +176,47 @@ plot(out2, col = "purple")
 
 matplot(out2[,1], out2[, c("Sv","Ev","Iv","Rv")], type="l",
         lwd=2, col=c("blue","purple","red","green"))
+
+# Abrir dispositivo PDF
+pdf(file = "Escenario2_SinTIE.pdf", width = 10, height = 14)
+
+par(mfrow = c(2, 1), mar = c(5, 5, 4, 2) + 0.1)
+
+#  Grafica 1: dinamica ganado
+cols_ganado <- c("Sv", "Ev", "Iv", "Rv")
+
+matplot(out2[, "time"], out2[, cols_ganado], 
+        type = "l", lty = 1, lwd = 3,
+        col = c("blue", "orange", "red", "green"),
+        xlab = "Tiempo (días)", 
+        ylab = "Población (Individuos)",
+        main = "Escenario 2: Sin TIE - Dinámica del Ganado",
+        cex.lab = 1.2, cex.main = 1.5)
+
+legend("topright", 
+       legend = c("Susceptibles", "Expuestos", "Infectados", "Recuperados"),
+       col = c("blue", "orange", "red", "green"), 
+       lty = 1, lwd = 3, bty = "n", cex = 1.1)
+
+# grafica 2 dinamica del parasito 
+cols_vector <- c("M", "Mo", "Ml", "Mp")
+
+matplot(out2[, "time"], out2[, cols_vector], 
+        type = "l", lty = 1, lwd = 3,
+        col = c("black", "purple", "brown", "gray"),
+        xlab = "Tiempo (días)", 
+        ylab = "Población (Escala Log)",
+        main = "Escenario 2: Sin TIE - Dinámica del Parásito",
+        log = "y", # Escala logarítmica esencial aquí
+        cex.lab = 1.2, cex.main = 1.5)
+
+legend("bottomright", 
+       legend = c("Adultos (M)", "Huevos (Mo)", "Larvas (Ml)", "Pupas (Mp)"),
+       col = c("black", "purple", "brown", "gray"), 
+       lty = 1, lwd = 3, bty = "n", cex = 1.1)
+
+# Cerrar PDF
+dev.off()
 ###############################################################################################
 
 ##sin ganado ilegal
@@ -182,3 +279,48 @@ plot(out3, col = "purple")
 
 matplot(out3[,1], out3[, c("Sv","Ev","Iv","Rv")], type="l",
         lwd=2, col=c("blue","purple","red","green"))
+
+# abrir dispositivo PDF
+pdf(file = "Escenario3_SinIlegal.pdf", width = 10, height = 14)
+
+par(mfrow = c(2, 1), mar = c(5, 5, 4, 2) + 0.1)
+
+# grafica 1: dinamica ganado
+cols_ganado <- c("Sv", "Ev", "Iv", "Rv")
+
+matplot(out3[, "time"], out3[, cols_ganado], 
+        type = "l", lty = 1, lwd = 3,
+        col = c("blue", "orange", "red", "green"),
+        xlab = "Tiempo (días)", 
+        ylab = "Población (Individuos)",
+        main = "Escenario 3: Sin Ilegal - Dinámica del Ganado",
+        cex.lab = 1.2, cex.main = 1.5)
+
+legend("topright", 
+       legend = c("Susceptibles", "Expuestos", "Infectados", "Recuperados"),
+       col = c("blue", "orange", "red", "green"), 
+       lty = 1, lwd = 3, bty = "n", cex = 1.1)
+
+# grafica 2: dinamica parásito
+cols_vector <- c("M", "Mo", "Ml", "Mp")
+
+matplot(out3[, "time"], out3[, cols_vector], 
+        type = "l", lty = 1, lwd = 3,
+        col = c("black", "purple", "brown", "gray"),
+        xlab = "Tiempo (días)", 
+        ylab = "Población (Escala Log)",
+        main = "Escenario 3: Sin Ilegal - Dinámica del Parásito",
+        log = "y", # Escala logarítmica para ver todas las líneas
+        cex.lab = 1.2, cex.main = 1.5)
+
+legend("bottomright", 
+       legend = c("Adultos (M)", "Huevos (Mo)", "Larvas (Ml)", "Pupas (Mp)"),
+       col = c("black", "purple", "brown", "gray"), 
+       lty = 1, lwd = 3, bty = "n", cex = 1.1)
+
+# Cerrar PDF
+dev.off()
+
+
+
+

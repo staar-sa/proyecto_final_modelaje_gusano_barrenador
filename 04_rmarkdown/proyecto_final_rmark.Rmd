@@ -283,64 +283,79 @@ Cálculo:
 
 Valor que usaremos para el modelo: $\alpha_{\text{base}} \approx 43$ por día.
 
-**Ajuste de la fecundidad por Técnica del Insecto Estéril (TIE)**
 
-Para estimar cuánto baja la reproducción por las liberaciones de machos estériles, usamos el parámetro **u**, que representa la proporción de hembras silvestres que quedan esterilizadas al aparearse con machos estériles.
+## Módulo de Mitigación: Técnica del Insecto Estéril (TIE)
 
-La fórmula estándar de la TIE es:
+La efectividad de la **Técnica del Insecto Estéril (TIE)** para reducir la tasa de oviposición de la mosca se cuantifica mediante el **factor de esterilidad** ($u$), que representa la proporción de apareamientos que resultan en huevos estériles.
 
-$$ u=\frac{CS}{CS+W} $$
+---
 
-donde: - $S$: machos estériles liberados por día, - $W$: machos silvestres, - $C$: competitividad del macho estéril.
+ 1. Definición de la Competitividad ($C$) 
 
-La competitividad $C$ se usa porque el macho estéril no siempre compite igual que el silvestre: a veces vuela menos, vive menos o es menos atractivo. Por eso no basta con contar moscas; hay que ponderar su “calidad”. Se tomo $C=0.5$ como valor medio estimado para *C. hominivorax*, ya que especificamente de esta mosca, no hay registros, sin embrago basado en la literatura de otros vectores, ronda entre 0.3 y 0.7, por lo que es el promedio.
+La **competitividad** $C$ se usa porque el macho estéril no siempre compite igual que el silvestre. Por ello, se pondera su “calidad”.
 
-```{r}
-C <- 0.5                   # competitividad promedio
-```
+Se tomó **$C=0.5$** como **valor medio estimado** para *Cochliomyia hominivorax*, ya que se basa en la literatura de otros vectores, donde la competitividad suele rondar entre $0.3$ y $0.7$.
 
-Con los datos de SENASICA (885 millones de moscas estériles entre nov 2024 y mayo 2025) (<https://www.gob.mx/agricultura/articulos/tecnica-del-insecto-esteril-la-tecnologia-que-esta-aplicando-el-gobierno-de-mexico-contra-el-gusano-barrenador-del-ganado>), el promedio diario fue:
+$$
+\text{Competitividad } (C) = 0.5
+$$
 
-```{r}
-lib_tot <- 885e6
-dias <- as.numeric(as.Date("2025-05-16") - as.Date("2024-11-30"))
+---
 
-S <- lib_tot / dias        # estériles por día
-S
-```
+ 2. Cálculo de la Tasa de Esterilidad ($u$)
 
-y, dado que el programa opera con una relación 10 moscas esteriles por 1 silvestre (<https://www.copeg.org/gusano-barrenador/#insecto>):
+Para determinar $u$, se utilizan los datos del programa de liberación de SENASICA y la proporción de moscas estériles a silvestres.
 
-```{r}
-W <- S/10
-W
-```
+**Datos de Liberación (SENASICA):**
+* **Moscas estériles liberadas:** $885$ millones ($\text{lib}_{\text{tot}}$) en un periodo de **$168$ días**.
+* **Tasa de liberación diaria ($S$):**
+    $$S = \frac{885,000,000}{168 \text{ días}} \approx 5,267,857 \text{ moscas estériles/día}$$
+* **Población silvestre estimada ($W$):**
+    El programa opera con una **relación de $10$ moscas estériles por cada $1$ silvestre**.
+    $$W = \frac{5,267,857}{10} \approx 526,786 \text{ moscas silvestres/día}$$
 
-Sustituyendo en la fórmula:
+**Cálculo de $u$:**
+Se sustituyen los valores en la fórmula de la proporción de apareamientos estériles:
 
-```{r}
-u <- (C*S)/(C*S + W)
-u
-```
+$$
+u = \frac{C \cdot S}{C \cdot S + W}
+$$
 
-$$ u \approx 0.83 $$
+$$
+u = \frac{0.5 \cdot 5,267,857}{(0.5 \cdot 5,267,857) + 526,786} \approx 0.8333
+$$
+
+El factor de esterilidad obtenido es:
+
+$$
+u \approx 0.83
+$$
 
 Esto significa que alrededor del **83% de las hembras quedan estériles**.
 
-Finalmente, se ajusta la fecundidad del modelo reduciendo la tasa original α:
+---
 
-$$ \alpha_{ef} = \alpha (1-u) $$
+ 3. Ajuste de la Fecundidad del Modelo
 
-Como $u=0.83$, queda:
-
-```{r}
-alpha_ef <- 43 * (1 - u)
-alpha_ef
-```
+El factor $u$ se utiliza para **ajustar la fecundidad efectiva** del modelo, reduciendo la tasa de oviposición original ($\alpha_{\text{base}}$) mediante la siguiente relación:
 
 $$
-\alpha_{\text{ajustado}} \approx 7.17 \; \text{huevos/día} \quad \text{con TIE (}u=0.83\text{)}.
+\alpha_{\text{efectiva}} = \alpha_{\text{base}} (1-u)
 $$
+
+Asumiendo que la tasa de oviposición base ($\alpha_{\text{base}}$) es de $43 \text{ huevos/día}$, con $u=0.83$ se obtiene:
+
+$$
+\alpha_{\text{ajustada}} = 43 \cdot (1 - 0.83) \approx 7.17 \text{ huevos/día}
+$$
+
+La tasa efectiva de oviposición utilizada en el modelo es:
+
+$$
+\alpha_{\text{ajustada}} \approx 7.17 \text{ huevos/día}
+$$
+
+
 
 Tasa de Mortalidad del Adulto ($\mu_A$)El parámetro $\mu_A$ es el inverso de la esperanza de vida promedio del adulto en la naturaleza.
 
@@ -507,17 +522,17 @@ $$\gamma = \frac{1}{\tau_{\text{recuperación}}} = \frac{1}{7} \approx 0.143 \te
 
 **Valor que usaremos para el modelo:** $\gamma \approx 0.14$ día$^{-1}$
 
-##Muerte asociada a la miasis
+## Muerte asociada a la miasis
 
 La tasa de muerte por gusa barrenador es de 4.8%, por lo que consideraremos 0.048 como valor. Esto fue reportado por Rogel & Tamayo en 2007.
 
-##Reicorporación a suceptibles: $\theta$
+## Reicorporación a suceptibles: $\theta$
 
 Tras una infestación, si esta es tratada, la recuperación consta de 30 días, aunque a los 10 días ya hay una notable recuperación en el animal. Se realiza una cuarentena aislando al animal del resto, pasados los treinta días el animal vuelve al rebaño.
 
 $$\theta = \frac{1}{30}$$
 
-##Contacto larva-bovino: $\delta$
+## Contacto larva-bovino: $\delta$
 
 De acuerdoKotzé et al. en 2016 la ovosición es de 300 a 400 huevos por puesta, aunque esto está sujeto a el área disponible y a otros factores como los recursos disponibles de la mosca, consideramos que todas los huevos eclosionaron y pasaron a ser larvas **en el bovino**. Para ello hacemos uso del inverso del promedio de la información proporcionada por dichos autores.
 
@@ -527,23 +542,57 @@ $$\delta = \frac{1}{350}$$
 Aguilar y colaboradores, determinaron que en Chiapas había una tasa de natalidad de 0.4 en bovinos, por lo que se aplicó a nuestra población.
 
 
-##Escenario donde hay moscas liberadas y entrada de ganado ilegal
+## Escenario donde hay moscas liberadas y entrada de ganado ilegal
 
 ![](images/moscas_ganado.png){width='100px'}
 
 ![](images/1.png){width='100px'}
-##Escenario donde hay sin liberación de moscas con ganado ilegal
+
+![](images/grafia1_bovino.png)
+![](images/grafica1_parasito.png)
+
+## Escenario donde hay sin liberación de moscas con ganado ilegal
 
 Aumenta el alfa y delta.
 
 ![](images/reduciendo_mitigacion_mosca.png){width='100px'}
 ![](images/2.png){width='100px'}
-##Escenario sin ganado ilegal
+
+![](images/grafica2_bovino.png)
+
+![](images/grafica2_parasito.png)
+
+## Escenario sin ganado ilegal
 
 ![](images/sin_ilegal.png){width='100px'}
 ![](images/3.png){width='100px'}
 
-## Referencias
+
+
+
+![](images/grafica3_bovino.png)
+![](images/grafica3_parasito.png)
+
+# **Conclusión basada en los escenarios del modelo**
+
+El análisis dinámico mediante el modelo SEIRS expandido muestra que el rebrote de *Cochliomyia hominivorax* en Chiapas no fue un evento espontáneo, sino el resultado de la combinación crítica de **movilidad de ganado** y **ausencia de control biológico**. Las gráficas de los distintos escenarios aportan evidencia clara sobre el papel determinante de cada factor.
+
+En el **escenario con liberación de moscas estériles y entrada de ganado**, las infestaciones aumentan inicialmente pero se mantienen contenidas. La Técnica del Insecto Estéril (TIE) actúa como modulador biológico capaz de impedir un rebrote explosivo, incluso con introducciones constantes de animales infestados. Este comportamiento es congruente con la estabilidad observada antes de 2024.
+
+En el **escenario sin liberación de moscas estériles y con entrada de ganado**, las curvas muestran un aumento abrupto, sostenido y de gran magnitud, reproduciendo el comportamiento real del rebrote en Chiapas. La ausencia del TIE permite la rápida expansión del parásito, mientras que la entrada transfronteriza de animales funciona como el mecanismo de introducción. Este escenario es el que más se ajusta a la dinámica epidémica observada.
+
+Por el contrario, en el **escenario sin entrada de ganado**, aun sin TIE, solo se observan incrementos pequeños y un comportamiento tendiente al equilibrio, sin explosiones epidémicas. Esto demuestra que **la reintroducción del parásito requiere entrada externa de animales infestados**; el clima por sí solo no genera un brote de esta magnitud.
+
+En conjunto, las simulaciones indican que **solo la combinación de entrada de ganado desde zonas limítrofes y ausencia del TIE reproduce la intensidad del rebrote real**. El clima cálido-húmedo de Chiapas favorece la amplificación, pero no es la causa primaria. El modelo evidencia que la **movilidad del ganado es el factor detonante**, y que el control biológico mediante TIE es fundamental para prevenir nuevas reintroducciones.
+
+**Conclusión general:**  
+La reintroducción de *C. hominivorax* estuvo impulsada por el ingreso de animales infestados y amplificada por la suspensión del TIE. Esto resalta la necesidad de restablecer el control biológico y reforzar la trazabilidad, vigilancia y regulación fronteriza para evitar futuros brotes.
+
+# **Limitaciones y oportunidades de mejora del modelo**
+
+Si bien este trabajo aporta una aproximación robusta a la dinámica del rebrote, es evidente que aún se requieren **más simulaciones con parámetros alternativos**, sensibilidad ampliada y escenarios más diversos. En este proyecto nos enfocamos en los parámetros “más obvios” respaldados por las referencias citadas, especialmente movilidad de ganado, ausencia del TIE y condiciones climáticas básicas. Sin embargo, el modelo podría enriquecerse de forma sustancial incorporando **nuevos factores de riesgo epidemiológico** indispensables para representar la complejidad real del sistema, tales como variación estacional detallada, tasas diferenciales de mortalidad larvaria, datos de decomisos e inspecciones, rutas ganaderas específicas, densidad de moscas silvestres, intervenciones locales, heterogeneidad entre municipios y cambios en prácticas de manejo pecuario. La inclusión de estos elementos permitiría aumentar la precisión predictiva y fortalecer la interpretación epidemiológica del rebrote.
+
+# Referencias
 -   Aguilar-Jiménez, C. E., et al. (2023). "Sistemas familiares de producción bovina de la región Frailesca de Chiapas, México, con base en el aporte de la ganadería al ingreso familiar". Tropical and Subtropical Agroecosystems, 26(2), 4131
 -   Servicio Nacional de Sanidad, Inocuidad y Calidad Agroalimentaria [SENASICA]. (2020). Todo lo que usted debe saber sobre la erradicación de la miasis causada por el gusano barrenador del ganado (GBG). <https://www.gob.mx/cms/uploads/attachment/file/936256/TODO_LO_QUE_DEBES_SABER_SOBRE_LA_ERRADICACI_N_DE_LA_MIASIS_CAUSADA_POR_GBG.pdf>
 -   De Sanidad Inocuidad Y Calidad Agroalimentaria, S. N. (n.d.). *Miasis por Gusano Barrenador*. gob.mx. <https://www.gob.mx/senasica/documentos/miasis-por-gusano-barrenador?state=published>
