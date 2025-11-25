@@ -283,39 +283,31 @@ Cálculo:
 
 Valor que usaremos para el modelo: $\alpha_{\text{base}} \approx 43$ por día.
 
-
 ## Módulo de Mitigación: Técnica del Insecto Estéril (TIE)
 
 La efectividad de la **Técnica del Insecto Estéril (TIE)** para reducir la tasa de oviposición de la mosca se cuantifica mediante el **factor de esterilidad** ($u$), que representa la proporción de apareamientos que resultan en huevos estériles.
 
----
+------------------------------------------------------------------------
 
- 1. Definición de la Competitividad ($C$) 
+1.  Definición de la Competitividad ($C$)
 
 La **competitividad** $C$ se usa porque el macho estéril no siempre compite igual que el silvestre. Por ello, se pondera su “calidad”.
 
-Se tomó **$C=0.5$** como **valor medio estimado** para *Cochliomyia hominivorax*, ya que se basa en la literatura de otros vectores, donde la competitividad suele rondar entre $0.3$ y $0.7$.
+Se tomó $C=0.5$ como **valor medio estimado** para *Cochliomyia hominivorax*, ya que se basa en la literatura de otros vectores, donde la competitividad suele rondar entre $0.3$ y $0.7$.
 
 $$
 \text{Competitividad } (C) = 0.5
 $$
 
----
+------------------------------------------------------------------------
 
- 2. Cálculo de la Tasa de Esterilidad ($u$)
+2.  Cálculo de la Tasa de Esterilidad ($u$)
 
 Para determinar $u$, se utilizan los datos del programa de liberación de SENASICA y la proporción de moscas estériles a silvestres.
 
-**Datos de Liberación (SENASICA):**
-* **Moscas estériles liberadas:** $885$ millones ($\text{lib}_{\text{tot}}$) en un periodo de **$168$ días**.
-* **Tasa de liberación diaria ($S$):**
-    $$S = \frac{885,000,000}{168 \text{ días}} \approx 5,267,857 \text{ moscas estériles/día}$$
-* **Población silvestre estimada ($W$):**
-    El programa opera con una **relación de $10$ moscas estériles por cada $1$ silvestre**.
-    $$W = \frac{5,267,857}{10} \approx 526,786 \text{ moscas silvestres/día}$$
+**Datos de Liberación (SENASICA):** \* **Moscas estériles liberadas:** $885$ millones ($\text{lib}_{\text{tot}}$) en un periodo de $168$ días. \* **Tasa de liberación diaria (**$S$): $$S = \frac{885,000,000}{168 \text{ días}} \approx 5,267,857 \text{ moscas estériles/día}$$ \* **Población silvestre estimada (**$W$): El programa opera con una **relación de** $10$ moscas estériles por cada $1$ silvestre. $$W = \frac{5,267,857}{10} \approx 526,786 \text{ moscas silvestres/día}$$
 
-**Cálculo de $u$:**
-Se sustituyen los valores en la fórmula de la proporción de apareamientos estériles:
+**Cálculo de** $u$: Se sustituyen los valores en la fórmula de la proporción de apareamientos estériles:
 
 $$
 u = \frac{C \cdot S}{C \cdot S + W}
@@ -333,9 +325,9 @@ $$
 
 Esto significa que alrededor del **83% de las hembras quedan estériles**.
 
----
+------------------------------------------------------------------------
 
- 3. Ajuste de la Fecundidad del Modelo
+3.  Ajuste de la Fecundidad del Modelo
 
 El factor $u$ se utiliza para **ajustar la fecundidad efectiva** del modelo, reduciendo la tasa de oviposición original ($\alpha_{\text{base}}$) mediante la siguiente relación:
 
@@ -354,8 +346,6 @@ La tasa efectiva de oviposición utilizada en el modelo es:
 $$
 \alpha_{\text{ajustada}} \approx 7.17 \text{ huevos/día}
 $$
-
-
 
 Tasa de Mortalidad del Adulto ($\mu_A$)El parámetro $\mu_A$ es el inverso de la esperanza de vida promedio del adulto en la naturaleza.
 
@@ -411,7 +401,7 @@ $$\text{Proporción de incidencia} = \frac{\text{Casos confirmados}}{\text{Pobla
 **Datos:**
 
 |                                     | **Valor**            | **Fuente**      |
-|:---------------------------------|:--------------------|:-----------------|
+|:--------------------------------|:--------------------|:-----------------|
 | Población bovina 2022 (Censo INEGI) | 1,653,718 cabezas    | INEGI (2022)    |
 | Tasa de crecimiento anual           | 8.06%                | INEGI (2022)    |
 | Período de proyección               | 2022 → 2025 (3 años) | \-              |
@@ -454,7 +444,7 @@ $$\text{Proporción de incidencia} = \frac{\text{Casos confirmados}}{\text{Pobla
 **Datos:**
 
 |   | **Valor** | **Fuente** |
-|:---------------------------------|:-------------------|:------------------|
+|:--------------------------------|:-------------------|:------------------|
 | Casos totales (1972-1990) | 286,750 casos | SENASICA |
 | Población bovina México (\~1980-1990) | 24,600,000 cabezas | INEGI/SAGARPA (1991) |
 | Período analizado | 1972 → 1990 (18 años) |  |
@@ -536,27 +526,27 @@ $$\theta = \frac{1}{30}$$
 
 De acuerdoKotzé et al. en 2016 la ovosición es de 300 a 400 huevos por puesta, aunque esto está sujeto a el área disponible y a otros factores como los recursos disponibles de la mosca, consideramos que todas los huevos eclosionaron y pasaron a ser larvas **en el bovino**. Para ello hacemos uso del inverso del promedio de la información proporcionada por dichos autores.
 
-$$\delta = \frac{1}{350}$$
-## Natalidad
+$$\delta = \frac{1}{350}$$ \## Natalidad
 
 Aguilar y colaboradores, determinaron que en Chiapas había una tasa de natalidad de 0.4 en bovinos, por lo que se aplicó a nuestra población.
 
-
 ## Escenario donde hay moscas liberadas y entrada de ganado ilegal
 
-![](images/moscas_ganado.png){width='100px'}
+![](images/moscas_ganado.png){width="624"}
 
-![](images/1.png){width='100px'}
+![](images/1.png){width="626"}
 
-![](images/grafia1_bovino.png)
+![](images/grafia1_bovino.png)  
+
 ![](images/grafica1_parasito.png)
 
 ## Escenario donde hay sin liberación de moscas con ganado ilegal
 
 Aumenta el alfa y delta.
 
-![](images/reduciendo_mitigacion_mosca.png){width='100px'}
-![](images/2.png){width='100px'}
+![](images/reduciendo_mitigacion_mosca.png){width="626"}  
+
+![](images/2.png){width="626"}
 
 ![](images/grafica2_bovino.png)
 
@@ -564,13 +554,12 @@ Aumenta el alfa y delta.
 
 ## Escenario sin ganado ilegal
 
-![](images/sin_ilegal.png){width='100px'}
-![](images/3.png){width='100px'}
+![](images/sin_ilegal.png){width="626"}  
 
+![](images/3.png){width="626"}
 
+![](images/grafica3_bovino.png)  
 
-
-![](images/grafica3_bovino.png)
 ![](images/grafica3_parasito.png)
 
 # **Conclusión basada en los escenarios del modelo**
@@ -585,7 +574,7 @@ Por el contrario, en el **escenario sin entrada de ganado**, aun sin TIE, solo s
 
 En conjunto, las simulaciones indican que **solo la combinación de entrada de ganado desde zonas limítrofes y ausencia del TIE reproduce la intensidad del rebrote real**. El clima cálido-húmedo de Chiapas favorece la amplificación, pero no es la causa primaria. El modelo evidencia que la **movilidad del ganado es el factor detonante**, y que el control biológico mediante TIE es fundamental para prevenir nuevas reintroducciones.
 
-**Conclusión general:**  
+**Conclusión general:**\
 La reintroducción de *C. hominivorax* estuvo impulsada por el ingreso de animales infestados y amplificada por la suspensión del TIE. Esto resalta la necesidad de restablecer el control biológico y reforzar la trazabilidad, vigilancia y regulación fronteriza para evitar futuros brotes.
 
 # **Limitaciones y oportunidades de mejora del modelo**
@@ -593,11 +582,9 @@ La reintroducción de *C. hominivorax* estuvo impulsada por el ingreso de animal
 Si bien este trabajo aporta una aproximación robusta a la dinámica del rebrote, es evidente que aún se requieren **más simulaciones con parámetros alternativos**, sensibilidad ampliada y escenarios más diversos. En este proyecto nos enfocamos en los parámetros “más obvios” respaldados por las referencias citadas, especialmente movilidad de ganado, ausencia del TIE y condiciones climáticas básicas. Sin embargo, el modelo podría enriquecerse de forma sustancial incorporando **nuevos factores de riesgo epidemiológico** indispensables para representar la complejidad real del sistema, tales como variación estacional detallada, tasas diferenciales de mortalidad larvaria, datos de decomisos e inspecciones, rutas ganaderas específicas, densidad de moscas silvestres, intervenciones locales, heterogeneidad entre municipios y cambios en prácticas de manejo pecuario. La inclusión de estos elementos permitiría aumentar la precisión predictiva y fortalecer la interpretación epidemiológica del rebrote.
 
 # Referencias
+
 -   Aguilar-Jiménez, C. E., et al. (2023). "Sistemas familiares de producción bovina de la región Frailesca de Chiapas, México, con base en el aporte de la ganadería al ingreso familiar". Tropical and Subtropical Agroecosystems, 26(2), 4131
 -   Servicio Nacional de Sanidad, Inocuidad y Calidad Agroalimentaria [SENASICA]. (2020). Todo lo que usted debe saber sobre la erradicación de la miasis causada por el gusano barrenador del ganado (GBG). <https://www.gob.mx/cms/uploads/attachment/file/936256/TODO_LO_QUE_DEBES_SABER_SOBRE_LA_ERRADICACI_N_DE_LA_MIASIS_CAUSADA_POR_GBG.pdf>
 -   De Sanidad Inocuidad Y Calidad Agroalimentaria, S. N. (n.d.). *Miasis por Gusano Barrenador*. gob.mx. <https://www.gob.mx/senasica/documentos/miasis-por-gusano-barrenador?state=published>
--   *¿Qué lugar ocupa Chiapas en la producción nacional de carne de bovino? - El Heraldo de Chiapas \| Noticias Locales, Policiacas, sobre México, Chiapas y el Mundo*. (n.d.). OEM. <https://oem.com.mx/elheraldodechiapas/local/que-lugar-ocupa-chiapas-en-la-produccion-nacional-de-carne-de-bovino-23023994>
--Kotzé, Z., Villet, M. H., & Weldon, C. W. (2016). Heat accumulation and development rate of massed maggots of the sheep blowfly, Lucilia cuprina (Diptera: Calliphoridae). Journal of Insect Physiology, 95, 98-104. https://doi.org/10.1016/j.jinsphys.2016.09.009
-- Rogel, L., & Tamayo, R. (2007). Mortalidad de vacas en tres rebaños lecheros: Estudio preliminar (1994-2004). Archivos de medicina veterinaria, 39(3), 255-260. https://doi.org/10.4067/S0301-732X2007000300009
-
-
+-   *¿Qué lugar ocupa Chiapas en la producción nacional de carne de bovino? - El Heraldo de Chiapas \| Noticias Locales, Policiacas, sobre México, Chiapas y el Mundo*. (n.d.). OEM. <https://oem.com.mx/elheraldodechiapas/local/que-lugar-ocupa-chiapas-en-la-produccion-nacional-de-carne-de-bovino-23023994> -Kotzé, Z., Villet, M. H., & Weldon, C. W. (2016). Heat accumulation and development rate of massed maggots of the sheep blowfly, Lucilia cuprina (Diptera: Calliphoridae). Journal of Insect Physiology, 95, 98-104. <https://doi.org/10.1016/j.jinsphys.2016.09.009>
+-   Rogel, L., & Tamayo, R. (2007). Mortalidad de vacas en tres rebaños lecheros: Estudio preliminar (1994-2004). Archivos de medicina veterinaria, 39(3), 255-260. <https://doi.org/10.4067/S0301-732X2007000300009>
