@@ -1,12 +1,15 @@
 ---
-title: 'Factores asociados al rebrote de miasis por Cochliomyia hominivorax en Chiapas: Un enfoque de modelaje de la enfermedad.'
+title: "Factores asociados al rebrote de miasis por Cochliomyia hominivorax en Chiapas: Un enfoque de modelaje de la enfermedad."
 author: "Estrella Segobia, Blanca Osornio, Daniela Villanueva, Melissa Martinez"
 date: "`r Sys.Date()`"
+
 output:
   pdf_document:
+    latex_engine: xelatex
     toc: true
     toc_depth: 3
     number_sections: true
+
 geometry: margin=2.5cm
 ---
 
@@ -165,6 +168,86 @@ Este módulo permite simular escenarios con liberaciones bajas, medias o intensi
 
 **A continuación se presenta la formulación del modelo completo mediante ecuaciones diferenciales:**
 
+La población total del hospedero es:
+
+$$
+N_v = S_v + E_v + I_v + R_v
+$$
+
+**Ecuaciones para el hospedero**
+
+--\> Susceptibles
+
+$$
+\frac{dS_v}{dt}
+= \text{natalidad} + p_1 + p_2
+  - \sigma S_v \left(\frac{M}{N_v}\right)
+  - \mu_v S_v
+  + \theta R_v
+$$
+
+--\> Expuestos
+
+$$
+\frac{dE_v}{dt}
+= \sigma S_v \left(\frac{M}{N_v}\right)
+  - \beta E_v
+  - \mu_v E_v
+$$
+
+--\> Infestados
+
+$$
+\frac{dI_v}{dt}
+= \sigma S_v \left(\frac{M}{N_v}\right)
+  - \beta E_v
+  - \gamma I_v
+  + \delta M_l I_v
+  - \mu_v I_v
+$$ --\> Recuperados
+
+$$
+\frac{dR_v}{dt}
+= \gamma I_v
+  - \mu_v R_v
+  - \theta R_v
+$$
+
+**Ciclo del gusano barrenador**
+
+--\> Adultos
+
+$$
+\frac{dM}{dt}
+= \epsilon M_p
+  - \alpha M
+  - \mu_m M
+$$
+
+--\> Huevos
+
+$$
+\frac{dM_o}{dt}
+= \alpha M
+  - (\eta + \mu_m) M_o
+$$
+
+--\> Larvas
+
+$$
+\frac{dM_l}{dt}
+= \eta M_o
+  - (\kappa + \mu_m) M_l
+$$
+
+--\> Pupas
+
+$$
+\frac{dM_p}{dt}
+= \kappa M_l
+  - (\epsilon + \mu_m) M_p
+$$
+
 ### Obtención de Parámetros
 
 Estos se basan en la biología conocida de la mosca *Cochliomyia hominivorax* y se obtienen principalmente de literatura científica, estudios entomológicos y reportes de programas de erradicación (como el de COPEG o agencias gubernamentales como SENASICA/USDA). La siguiente información se obtuvo de SENASICA (2020):
@@ -180,7 +263,67 @@ Estos se basan en la biología conocida de la mosca *Cochliomyia hominivorax* y 
 
 Valor que usaremos para el modelo: $\alpha_{\text{base}} \approx 43$ por día.
 
--   Tasa de Mortalidad del Adulto ($\mu_A$)El parámetro $\mu_A$ es el inverso de la esperanza de vida promedio del adulto en la naturaleza.
+**Ajuste de la fecundidad por Técnica del Insecto Estéril (TIE)**
+
+Para estimar cuánto baja la reproducción por las liberaciones de machos estériles, usamos el parámetro **u**, que representa la proporción de hembras silvestres que quedan esterilizadas al aparearse con machos estériles.
+
+La fórmula estándar de la TIE es:
+
+$$ u=\frac{CS}{CS+W} $$
+
+donde: - $S$: machos estériles liberados por día, - $W$: machos silvestres, - $C$: competitividad del macho estéril.
+
+La competitividad $C$ se usa porque el macho estéril no siempre compite igual que el silvestre: a veces vuela menos, vive menos o es menos atractivo. Por eso no basta con contar moscas; hay que ponderar su “calidad”. Se tomo $C=0.5$ como valor medio estimado para *C. hominivorax*, ya que especificamente de esta mosca, no hay registros, sin embrago basado en la literatura de otros vectores, ronda entre 0.3 y 0.7, por lo que es el promedio.
+
+```{r}
+C <- 0.5                   # competitividad promedio
+```
+
+Con los datos de SENASICA (885 millones de moscas estériles entre nov 2024 y mayo 2025) (<https://www.gob.mx/agricultura/articulos/tecnica-del-insecto-esteril-la-tecnologia-que-esta-aplicando-el-gobierno-de-mexico-contra-el-gusano-barrenador-del-ganado>), el promedio diario fue:
+
+```{r}
+lib_tot <- 885e6
+dias <- as.numeric(as.Date("2025-05-16") - as.Date("2024-11-30"))
+
+S <- lib_tot / dias        # estériles por día
+S
+```
+
+y, dado que el programa opera con una relación 10 moscas esteriles por 1 silvestre (<https://www.copeg.org/gusano-barrenador/#insecto>):
+
+```{r}
+W <- S/10
+W
+```
+
+Sustituyendo en la fórmula:
+
+```{r}
+u <- (C*S)/(C*S + W)
+u
+```
+
+$$ u \approx 0.83 $$
+
+Esto significa que alrededor del **83% de las hembras quedan estériles**.
+
+Finalmente, se ajusta la fecundidad del modelo reduciendo la tasa original α:
+
+$$ \alpha_{ef} = \alpha (1-u) $$
+
+Como $u=0.83$, queda:
+
+```{r}
+alpha_ef <- 43 * (1 - u)
+alpha_ef
+```
+
+$$
+\alpha_{\text{ajustado}} \approx 7.17 \; \text{huevos/día} \quad \text{con TIE (}u=0.83\text{)}.
+$$
+
+Tasa de Mortalidad del Adulto ($\mu_A$)El parámetro $\mu_A$ es el inverso de la esperanza de vida promedio del adulto en la naturaleza.
+
 -   Vida de los Machos: $14$ a $21$ días (Promedio: $17.5$ días)
 -   Vida de las Hembras: $10$ a $30$ días (Promedio: $20$ días)
 -   Vida Promedio Ponderada (asumiendo 50% machos, 50% hembras):$$\text{Vida Promedio} \approx \frac{17.5 + 20}{2} = 18.75 \text{ días}$$
