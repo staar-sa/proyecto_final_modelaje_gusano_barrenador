@@ -1,6 +1,14 @@
 
 ######Parámetros
 
+library(readr)
+library(dplyr)
+
+
+##Natalidad 0.4 en Chiapas
+
+
+
 ##Introducción del ganado
 
 ##23,325 cabezas de ganado entraron a Chiapas en 2023
@@ -11,9 +19,6 @@ ilegal<-231/.16 ##16% de ganado ilegal
 ilegal
 
 ##legal= 23 325 e ilegal=  1444
-
-
-<<<<<<< Updated upstream
 
 # Parámetro σ (Susceptible → Expuesto)
 
@@ -27,6 +32,7 @@ t <- 3             # Años de proyección
 
 N_2025 <- N_2022 * (1 + r)^t
 N_2025
+
 
 # 2. Proporción de incidencia
 casos_actuales <- 1326  # Casos confirmados en Chiapas
@@ -73,7 +79,6 @@ tau_I <- 7  # días
 gamma <- 1 / tau_I
 gamma
 
-=======
 ## Parámetro de oviposición base (alpha_base)
 ## alpha_base = (Huevos totales puestos en su vida) / (Esperanza de vida reproductiva de la hembra (días))
 promedio_huevos_por_masa <- 300   ## Promedio de huevos por masa (entre 200 y 400)
@@ -89,6 +94,60 @@ Tasa_Hembra
 
 alpha_base <- Tasa_Hembra * proporcion_hembras ##la tasa promedio por individuo en A es la mitad de la tasa de la hembra.
 alpha_base
+
+
+
+# Cargar archivo CSV 
+clima <- read_csv("01_datos_crudos/clima_chiapas_2022_2025.csv.csv")
+
+# Ver primeras filas
+head(clima)
+
+
+# Crear el factor climático
+
+# Definir valores mínimos biológicos sacados de literatura
+Tmin <- 22 #temp mínima para desarrollo del barrenador, Spradbery 1991; Gutierrez 2019
+Pmin <- 20 #precipitación mínima, NOAA/USDA Screwworm Program
+Hmin <- 60 # Humedad relativa mínima,  Gutierrez 2019; Hall & Wall 1995
+K    <- 612 #grados/dia de los barrenadores en gral
+
+# función del factor climático
+f_clima <- function(T, P, H, Tmin, Pmin, Hmin, K){
+  ((T - Tmin)/K) * ((P - Pmin)/K) * ((H - Hmin)/K)
+}
+
+#aplicar la función a todo el dataset
+clima$f_clima <- with(
+  clima,
+  f_clima(temp_media, prec_media, humedad_media,
+          Tmin, Pmin, Hmin, K)
+)
+
+#revisar los resultados
+head(clima)
+
+#promedio de la influencia del clima en el periodo establecido
+
+influencia.clima<-mean(0.00000162, 0.00000298 , 0.000000971, 0.00000379, 0.0000250,  0.0000802)
+
+alpha_clima<- Tasa_Hembra * proporcion_hembras * influencia.clima
+alpha_clima
+
+##cuando no hay moscas estériles
+
+promedio_huevos_por_masa1 <- 800  ## Promedio de huevos por masa (entre 200 y 400)
+numero_masas_totales1 <- 8         ## Máximo de masas de huevos en su vida
+vida_reproductiva_dias1<- 14      ## Días que la hembra está en capacidad de oviponer
+proporcion_hembras1 <- 0.50        ## 50% de la población Adulta (A) son hembras
+
+Huevos_totales_por_hembra1 <- promedio_huevos_por_masa1 * numero_masas_totales1
+Huevos_totales_por_hembra1
+
+Tasa_Hembra1 <- Huevos_totales_por_hembra1 / vida_reproductiva_dias1
+Tasa_Hembra1
+alpha_nm<-Tasa_Hembra1* proporcion_hembras1* influencia.clima
+alpha_nm
 
 ## Mortalidad mosca Adulta muA
 ## El parámetro muA es la tasa de mortalidad natural del adulto, y se calcula como el inverso de la esperanza de vida promedio del adulto en la naturaleza.
@@ -118,4 +177,43 @@ kappa_base
 
 eps_base <- 1 / tau_pupa_a_adulto ## Tasa de pupa a adulto 
 eps_base
->>>>>>> Stashed changes
+
+###Recuperación
+
+etha<- 1/30 # 30 días de recuperación luego del tratamiento, aunque hay mejora a los 10 días
+etha
+
+##delta
+
+delta<-1/350
+delta
+
+delta2<-1/700
+delta2
+
+#Natalidad
+
+natalidad<-N_2025*.04
+natalidad
+
+###Variables N=
+
+#Casos en 2025: 7474
+
+suceptibles<-1653718-7474-469147-5231
+suceptibles
+infestados<-7474 #casos
+Expuestos<-469147 ##cabezas de ganado en sitios fronterizos
+recuperados<-5231
+
+total<-suceptibles+Expuestos+recuperados
+total
+
+larvas<-300*infestados
+larvas
+
+huevos<-10000000*350
+huevos
+
+pupa<-huevos/3
+pupa

@@ -136,7 +136,7 @@ Además del clima, la entrada de animales al estado afecta la dinámica de la mi
 Como no podemos medir exactamente cuánto ganado ilegal entra, usamos un ajuste sencillo:
 
 $$
-\rho = \frac{\text{incautaciones}}{\text{estimación total}}
+\rho2 = \frac{\text{incautaciones}}{\text{estimación total}}
 $$
 
 Este ajuste representa el nivel de ganado ilegal que pudo entrar. Lo cual influye directamente en:
@@ -507,8 +507,46 @@ $$\gamma = \frac{1}{\tau_{\text{recuperación}}} = \frac{1}{7} \approx 0.143 \te
 
 **Valor que usaremos para el modelo:** $\gamma \approx 0.14$ día$^{-1}$
 
-## Referencias
+##Muerte asociada a la miasis
 
+La tasa de muerte por gusa barrenador es de 4.8%, por lo que consideraremos 0.048 como valor. Esto fue reportado por Rogel & Tamayo en 2007.
+
+##Reicorporación a suceptibles: $\theta$
+
+Tras una infestación, si esta es tratada, la recuperación consta de 30 días, aunque a los 10 días ya hay una notable recuperación en el animal. Se realiza una cuarentena aislando al animal del resto, pasados los treinta días el animal vuelve al rebaño.
+
+$$\theta = \frac{1}{30}$$
+
+##Contacto larva-bovino: $\delta$
+
+De acuerdoKotzé et al. en 2016 la ovosición es de 300 a 400 huevos por puesta, aunque esto está sujeto a el área disponible y a otros factores como los recursos disponibles de la mosca, consideramos que todas los huevos eclosionaron y pasaron a ser larvas **en el bovino**. Para ello hacemos uso del inverso del promedio de la información proporcionada por dichos autores.
+
+$$\delta = \frac{1}{350}$$
+## Natalidad
+
+Aguilar y colaboradores, determinaron que en Chiapas había una tasa de natalidad de 0.4 en bovinos, por lo que se aplicó a nuestra población.
+
+
+##Escenario donde hay moscas liberadas y entrada de ganado ilegal
+
+![](images/moscas_ganado.png){width='100px'}
+
+##Escenario donde hay sin liberación de moscas con ganado ilegal
+
+Aumenta el alfa y delta.
+
+![](images/reduciendo_mitigacion_mosca.png){width='100px'}
+
+##Escenario sin ganado ilegal
+
+![](images/sin_ilegal.png){width='100px'}
+
+## Referencias
+-   Aguilar-Jiménez, C. E., et al. (2023). "Sistemas familiares de producción bovina de la región Frailesca de Chiapas, México, con base en el aporte de la ganadería al ingreso familiar". Tropical and Subtropical Agroecosystems, 26(2), 4131
 -   Servicio Nacional de Sanidad, Inocuidad y Calidad Agroalimentaria [SENASICA]. (2020). Todo lo que usted debe saber sobre la erradicación de la miasis causada por el gusano barrenador del ganado (GBG). <https://www.gob.mx/cms/uploads/attachment/file/936256/TODO_LO_QUE_DEBES_SABER_SOBRE_LA_ERRADICACI_N_DE_LA_MIASIS_CAUSADA_POR_GBG.pdf>
 -   De Sanidad Inocuidad Y Calidad Agroalimentaria, S. N. (n.d.). *Miasis por Gusano Barrenador*. gob.mx. <https://www.gob.mx/senasica/documentos/miasis-por-gusano-barrenador?state=published>
 -   *¿Qué lugar ocupa Chiapas en la producción nacional de carne de bovino? - El Heraldo de Chiapas \| Noticias Locales, Policiacas, sobre México, Chiapas y el Mundo*. (n.d.). OEM. <https://oem.com.mx/elheraldodechiapas/local/que-lugar-ocupa-chiapas-en-la-produccion-nacional-de-carne-de-bovino-23023994>
+-Kotzé, Z., Villet, M. H., & Weldon, C. W. (2016). Heat accumulation and development rate of massed maggots of the sheep blowfly, Lucilia cuprina (Diptera: Calliphoridae). Journal of Insect Physiology, 95, 98-104. https://doi.org/10.1016/j.jinsphys.2016.09.009
+- Rogel, L., & Tamayo, R. (2007). Mortalidad de vacas en tres rebaños lecheros: Estudio preliminar (1994-2004). Archivos de medicina veterinaria, 39(3), 255-260. https://doi.org/10.4067/S0301-732X2007000300009
+
+
