@@ -248,6 +248,39 @@ $$
   - (\epsilon + \mu_m) M_p
 $$
 
+### **Tabla de variables y parámetros del modelo**
+
+| Símbolo | Descripción |
+|---------|-------------|
+| **Sv** | Hospedadores susceptibles (ganado sin infestación). |
+| **Ev** | Hospedadores expuestos; animales con larvas en incubación (sin signos clínicos). |
+| **Iv** | Hospedadores infectados; animales con infestación activa. |
+| **Rv** | Hospedadores recuperados con inmunidad temporal. |
+| **Nv** | Tamaño total de la población bovina: Sv + Ev + Iv + Rv. |
+| **Estado del díptero** | **Descripción** |
+|------------------------|-----------------|
+| **Mo** | Huevos de *C. hominivorax*. |
+| **Ml** | Larvas (estadios larvarios dentro del hospedador). |
+| **Mp** | Pupas (transición de larva a mosca adulta). |
+| **M** | Moscas adultas totales (fértiles + estériles). |
+
+
+| **Parámetro** | **Descripción** |
+|---------------|-----------------|
+| **p1** | Proporción de animales legales. |
+| **p2** | Proporción de animales ilegales. |
+| **sigma ($\sigma$)** |  tasa de transición Susceptible → Expuesto (oviposición e incubación)|
+| **mu ($\mu$)** | Tasa de mortalidad natural. |
+| **theta ($\theta$)** |  tasa de transición Recuperado → Susceptible (pérdida de protección) |
+| **beta ($\beta$)** | tasa de transición Expuesto → Infestado (desarrollo larvario temprano) |
+| **gamma ($\gamma$)** |  tasa de transición Infestado → Recuperado (tratamiento y cicatrización). |
+| **alpha ($\alpha$)** |  tasa efectiva de oviposición  |
+| **delta ($\delta$)** |  Contacto larva-bovino. |
+
+
+
+
+
 ### Obtención de Parámetros
 
 Estos se basan en la biología conocida de la mosca *Cochliomyia hominivorax* y se obtienen principalmente de literatura científica, estudios entomológicos y reportes de programas de erradicación (como el de COPEG o agencias gubernamentales como SENASICA/USDA). La siguiente información se obtuvo de SENASICA (2020):
@@ -549,7 +582,8 @@ Aumenta el alfa y delta.
 ![](images/grafica3_bovino.png)  
 
 ![](images/grafica3_parasito.png)
-##Aproximado de R0
+
+# Aproximado de R0
 
 $$R0 = \frac{beta+sigma (M/Nv) +alfa+tetha+}{tasas de muerte del vector + gamma}$$
 
