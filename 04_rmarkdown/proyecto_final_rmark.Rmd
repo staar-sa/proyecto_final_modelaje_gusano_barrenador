@@ -60,9 +60,6 @@ La información se recopilará desde fuentes oficiales y científicas, incluyend
 
 -   CONAGUA: registros de precipitación, humedad relativa y temperatura.
 
--   **Además de referencias como:**
-
-    **(ingresar bibliografía de dónde se sacan tasas sobre el ciclo de vida de la larva) Literatura especializada: tasas biológicas (oviposición, maduración larvaria, pupación, emergencia y longevidad).**
 
 ## Formulación del modelo SEIRS expandido
 
