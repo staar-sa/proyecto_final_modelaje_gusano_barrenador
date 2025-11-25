@@ -430,6 +430,47 @@ $$\sigma = \frac{6.35 \times 10^{-4}}{365 \text{ días}} = 1.74 \times 10^{-6} \
 
 **Valor que usaremos para el modelo:** $\sigma \approx 1.74 \times 10^{-6}$ día$^{-1}$ (0.00000174 día$^{-1}$ )
 
+## Parámetro $\sigma$ (Susceptible → Expuesto) - Período Pre-Erradicación
+
+### Paso 1: Cálculo de la proporción de incidencia
+
+$$\text{Proporción de incidencia} = \frac{\text{Casos confirmados}}{\text{Población total}}$$
+
+**Datos:**
+
+|   | **Valor** | **Fuente** |
+|:---|:---|:---|
+| Casos totales (1972-1990) | 286,750 casos | SENASICA |
+| Población bovina México (\~1980-1990) | 24,600,000 cabezas | INEGI/SAGARPA (1991) |
+| Período analizado | 1972 → 1990 (18 años) |  |
+
+**Nota sobre la población:** Se utilizo la población bovina nacional de México estimada en aproximadamente 24.6 millones de cabezas durante el período 1980-1990, que representa el punto medio del período analizado.
+
+**Cálculo de la proporción de incidencia:**
+
+$$\text{Proporción} = \frac{286,750}{24,600,000} = 1.17 \times 10^{-2}$$
+
+### Paso 2: Conversión a tasa de incidencia
+
+Para obtener la tasa por día, dividimos la proporción entre la duración del período:
+
+$$\sigma_{\text{pre-erradicación}} = \frac{\text{Proporción de incidencia}}{\text{Duración del período (días)}}$$
+
+**Datos temporales del período pre-erradicación:**
+
+|                      | **Valor**      |
+|:---------------------|:---------------|
+| Inicio del período   | 1972           |
+| Fin del período      | 1990           |
+| Duración del período | 18 años        |
+| Duración en días     | **6,570 días** |
+
+**Cálculo de** $\sigma$ **pre-erradicación (tasa de incidencia):**
+
+$$\sigma_{\text{pre-erradicación}} = \frac{1.17 \times 10^{-2}}{6,570 \text{ días}} = 1.78 \times 10^{-6} \text{ día}^{-1}$$
+
+**Valor que usaremos para el modelo:** $\sigma_{\text{pre-erradicación}} \approx 1.78 \times 10^{-6}$ día$^{-1}$ (0.00000178 día$^{-1}$)
+
 Parámetro $\beta$ (Expuesto → Infestado)
 
 El parámetro $\beta$ representa la tasa a la cual bovinos con huevos depositados o larvas recién eclosionadas desarrollan una infestación clínicamente detectable.
