@@ -196,8 +196,7 @@ $$
 
 $$
 \frac{dI_v}{dt}
-= \sigma S_v \left(\frac{M}{N_v}\right)
-  - \beta E_v
+=  \beta E_v
   - \gamma I_v
   + \delta M_l I_v
   - \mu_v I_v
