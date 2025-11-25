@@ -255,7 +255,7 @@ Estos se basan en la biología conocida de la mosca *Cochliomyia hominivorax* y 
 -   El parámetro $\alpha_{\text{base}}$ representa la tasa promedio de producción de huevos por mosca adulta por día en condiciones ideales.$$\alpha_{\text{base}} = \frac{\text{Huevos totales puestos en su vida}}{\text{Esperanza de vida reproductiva de la hembra (días)}}$$
 
 | **Dato Biológico** | **Valor** | **Uso en** $\alpha_{\text{base}}$ |
-|:---|:---|:---|
+|:-----------------------|:-----------------------|:-----------------------|
 | Población en $A$ | 50% Hembras, 50% Machos | Solo las hembras oviponen. |
 | Oviposición por Masa | $200$ a $400$ huevos (Usamos $300$) | Se usa para calcular la producción total. |
 | Masas Totales | Hasta cuatro masas de huevos en su vida. | Se usa para calcular la producción total. |
@@ -353,7 +353,7 @@ La tasa de mortalidad diaria ($\mu_A$) se calcula como el inverso del tiempo pro
 **Suposiciones para las Tasas de Mortalidad**
 
 | **Parámetro** | **Fase** | **Suposición** | **Valor Sugerido (Diario)** | **Razón** |
-|:---|:---|:---|:---|:---|
+|:--------------|:--------------|:--------------|:--------------|:--------------|
 | $\mu_H$ | Huevo | Mínima mortalidad (principalmente por factores intrínsecos). | 0.005 (0.5%) | El texto SENASICA 2020 indica que eclosionan rápidamente (1 día). Los huevos en la masa están protegidos por la hembra y por estar en el borde de una herida (ambiente nutritivo). |
 | $\mu_L$ | Larva | Mortalidad baja (protegida dentro del huésped). | 0.01 (1%) | La larva es un parásito obligado; está protegida dentro del tejido vivo de la herida. La principal amenaza es el tratamiento (que está fuera de esta $\mu$) o que la herida se seque. |
 | $\mu_P$ | Pupa | Mortalidad más alta (fase ambiental más vulnerable). | 0.03 (3%) | La pupa se encuentra en el suelo, donde está expuesta a la depredación, inundaciones, desecación extrema o temperaturas desfavorables (aunque el clima base sea óptimo, hay riesgos). |
@@ -363,7 +363,7 @@ La tasa de mortalidad diaria ($\mu_A$) se calcula como el inverso del tiempo pro
 $$\text{Tasa de Transición } (\lambda) = \frac{1}{\text{Tiempo Promedio de la Fase } (\tau \text{ días})}$$
 
 | **Parámetro** | **Fase** | **Duración Promedio (**$\tau$) | **Tasa Diaria (**$\lambda=1/\tau$) | **Valor que usaremos para el modelo** |
-|:---|:---|:---|:---|:---|
+|:--------------|:--------------|:--------------|:--------------|:--------------|
 | $\eta_{\text{base}}$ | Huevo $\rightarrow$ Larva | 0.4167 días | $1 / 0.4167$ | 2.4 |
 | $\kappa_{\text{base}}$ | Larva $\rightarrow$ Pupa | 6 días | $1 / 6$ | 0.167 |
 | $\epsilon_{\text{base}}$ | Pupa $\rightarrow$ Adulto | 8.5 días | $1 / 8.5$ | 0.118 |
@@ -396,7 +396,7 @@ $$\text{Proporción de incidencia} = \frac{\text{Casos confirmados}}{\text{Pobla
 **Datos:**
 
 |                                     | **Valor**            | **Fuente**      |
-|:------------------------------------|:---------------------|:----------------|
+|:---------------------------------|:--------------------|:-----------------|
 | Población bovina 2022 (Censo INEGI) | 1,653,718 cabezas    | INEGI (2022)    |
 | Tasa de crecimiento anual           | 8.06%                | INEGI (2022)    |
 | Período de proyección               | 2022 → 2025 (3 años) | \-              |
@@ -439,7 +439,7 @@ $$\text{Proporción de incidencia} = \frac{\text{Casos confirmados}}{\text{Pobla
 **Datos:**
 
 |   | **Valor** | **Fuente** |
-|:---|:---|:---|
+|:---------------------------------|:-------------------|:------------------|
 | Casos totales (1972-1990) | 286,750 casos | SENASICA |
 | Población bovina México (\~1980-1990) | 24,600,000 cabezas | INEGI/SAGARPA (1991) |
 | Período analizado | 1972 → 1990 (18 años) |  |
@@ -510,3 +510,5 @@ $$\gamma = \frac{1}{\tau_{\text{recuperación}}} = \frac{1}{7} \approx 0.143 \te
 ## Referencias
 
 -   Servicio Nacional de Sanidad, Inocuidad y Calidad Agroalimentaria [SENASICA]. (2020). Todo lo que usted debe saber sobre la erradicación de la miasis causada por el gusano barrenador del ganado (GBG). <https://www.gob.mx/cms/uploads/attachment/file/936256/TODO_LO_QUE_DEBES_SABER_SOBRE_LA_ERRADICACI_N_DE_LA_MIASIS_CAUSADA_POR_GBG.pdf>
+-   De Sanidad Inocuidad Y Calidad Agroalimentaria, S. N. (n.d.). *Miasis por Gusano Barrenador*. gob.mx. <https://www.gob.mx/senasica/documentos/miasis-por-gusano-barrenador?state=published>
+-   *¿Qué lugar ocupa Chiapas en la producción nacional de carne de bovino? - El Heraldo de Chiapas \| Noticias Locales, Policiacas, sobre México, Chiapas y el Mundo*. (n.d.). OEM. <https://oem.com.mx/elheraldodechiapas/local/que-lugar-ocupa-chiapas-en-la-produccion-nacional-de-carne-de-bovino-23023994>
